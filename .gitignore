@@ -1,0 +1,4 @@
+# React
+node_modules/
+.build/
+dist/

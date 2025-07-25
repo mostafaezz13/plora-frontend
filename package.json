@@ -1,0 +1,31 @@
+{
+  "name": "plora-frontend",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "vite --host --port 8888",
+    "build": "vite build",
+    "preview": "vite preview",
+    "push": "git add . && git commit -m \"تعديلات\" && git push origin main"
+  },
+  "dependencies": {
+    "framer-motion": "^12.23.7",
+    "i18next": "^25.3.2",
+    "lucide-react": "^0.525.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.5.2",
+    "react-icons": "^5.5.0",
+    "react-router-dom": "^7.7.0",
+    "react-slick": "^0.30.3",
+    "slick-carousel": "^1.8.1",
+    "swiper": "^11.2.10"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.21",
+    "prettier": "^3.6.2",
+    "tailwindcss": "^3.3.2",
+    "vite": "^7.0.5"
+  }
+}
