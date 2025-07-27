@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { CartContext } from "./context/cartcontext";
+import { CartContext } from "./context/CartContext";
 import { FaTrash, FaPlus, FaMinus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useParams, useNavigate } from "react-router-dom";
+import { supabase } from "./supabaseClient";
 
 const Cart = () => {
   const { cartItems, addToCart, removeFromCart } = useContext(CartContext);
@@ -66,7 +67,7 @@ const Cart = () => {
                 >
                   <div className="flex items-center gap-4">
                     <img
-                      src={Array.isArray(item.image) ? item.image[0] : item.image}
+                      src={Array.isArray(item.image) ? item.image[0] : item.image_url}
                       alt={item.name}
                       className="w-20 h-20 rounded-lg object-cover shadow-md"
                     />

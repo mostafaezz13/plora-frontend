@@ -22,7 +22,10 @@ module.exports = {
   darkMode: "class", // أو 'media' لو عايزها حسب إعداد الجهاز، بس الأفضل 'class'
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      scale: {
+        '102': '1.02',
+      },
   },
   plugins: [],
-};
+}};

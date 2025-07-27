@@ -8,7 +8,10 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Cart from "./Cart";
 import ProductDetails from "./pages/ProductDetails";
+import AddProduct from "./dashboard/AddProduct";
+import ProductList from './ProductList';
 
+import { supabase } from "./supabaseClient";
 function App() {
   const [cart, setCart] = useState([]);
 
@@ -30,6 +33,8 @@ function App() {
           path="/product/:id"
           element={<ProductDetails addToCart={addToCart} />}
         />
+        <Route path="/add-product" element={<AddProduct />} />
+        <Route path="/product-list" element={<ProductList />} />
       </Routes>
     </>
   );

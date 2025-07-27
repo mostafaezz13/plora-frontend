@@ -1,10 +1,11 @@
-import React, { useState, useContext } from "react";
-import productsData from "./data/products";
-import { CartContext } from "./context/cartcontext";
+import React, { useState, useContext, useEffect } from "react";
+import { CartContext } from "./context/CartContext";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "react-hot-toast";
 import { FaShoppingCart } from "react-icons/fa";
+import { supabase } from "./supabaseClient";
+
 const categories = [
   "All Products",
   "Rings",
@@ -16,13 +17,29 @@ const categories = [
 const AllProducts = () => {
   const [selectedCategory, setSelectedCategory] = useState("All Products");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const { addToCart } = useContext(CartContext);
-  const closeMenu = () => setIsOpen(false);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoading(true);
+      const { data, error } = await supabase.from("products").select("*");
+      if (error) {
+        console.error("Error fetching products:", error);
+      } else {
+        setProducts(data);
+      }
+      setLoading(false);
+    };
+
+    fetchProducts();
+  }, []);
 
   const filteredProducts =
     selectedCategory === "All Products"
-      ? productsData
-      : productsData.filter((product) => product.category === selectedCategory);
+      ? products
+      : products.filter((product) => product.category === selectedCategory);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen((prev) => !prev);
@@ -37,7 +54,6 @@ const AllProducts = () => {
       transition={{ duration: 0.4 }}
     >
       <div className="flex flex-col md:flex-row min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-500">
-        {/* Sidebar Desktop */}
         <aside className="hidden md:block md:w-64 bg-white dark:bg-gray-800 border-r dark:border-gray-700 p-6 transition-colors duration-500 sticky top-0 h-screen overflow-y-auto">
           <h2 className="text-pink-600 dark:text-pink-400 font-bold mb-4 text-lg text-left">
             Categories
@@ -63,13 +79,10 @@ const AllProducts = () => {
           </ul>
         </aside>
 
-        {/* Mobile Hamburger & Categories */}
         <div className="block md:hidden w-full">
-          {/* الهامبرجر */}
           <div className="flex items-center justify-between bg-white dark:bg-gray-800 border-b dark:border-gray-700 px-4 py-3">
             <Link
               to="/cart"
-              onClick={closeMenu}
               className="text-gray-700 dark:text-gray-200 hover:text-pink-500 dark:hover:text-pink-400 font-medium"
             >
               <FaShoppingCart className="text-2xl" />
@@ -82,7 +95,6 @@ const AllProducts = () => {
               aria-label="Toggle menu"
               className="text-pink-600 dark:text-pink-400 focus:outline-none"
             >
-              {/* أيقونة الهامبرجر تتحرك بالدوران */}
               <motion.svg
                 className="w-6 h-6"
                 fill="none"
@@ -97,19 +109,18 @@ const AllProducts = () => {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     d="M6 18L18 6M6 6l12 12"
-                  /> // إكس
+                  />
                 ) : (
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     d="M4 6h16M4 12h16M4 18h16"
-                  /> // خطوط الهامبرجر
+                  />
                 )}
               </motion.svg>
             </button>
           </div>
 
-          {/* قائمة التصنيفات مع أنيميشن framer-motion */}
           <AnimatePresence>
             {mobileMenuOpen && (
               <motion.ul
@@ -142,13 +153,16 @@ const AllProducts = () => {
           </AnimatePresence>
         </div>
 
-        {/* Main Content */}
         <main className="flex-1 p-4 md:p-6">
           <h1 className="text-2xl font-bold text-pink-600 dark:text-pink-400 mb-6">
             {selectedCategory}
           </h1>
 
-          {filteredProducts.length === 0 ? (
+          {loading ? (
+            <p className="text-gray-500 dark:text-gray-400">
+              Loading products...
+            </p>
+          ) : filteredProducts.length === 0 ? (
             <p className="text-gray-500 dark:text-gray-400">
               No products found in this category.
             </p>
@@ -158,7 +172,11 @@ const AllProducts = () => {
                 <Link to={`/product/${product.id}`} key={product.id}>
                   <div className="bg-white dark:bg-gray-800 shadow-md dark:shadow-lg rounded-xl overflow-hidden p-4 flex flex-col transition-transform hover:scale-[1.02] duration-300 group">
                     <img
-                      src={Array.isArray(product.image) ? product.image[0] : product.image}
+                      src={
+                        Array.isArray(product.image_url)
+                          ? product.image_url[0]
+                          : product.image_url || "/default.jpg"
+                      }
                       alt={product.name}
                       className="w-full h-auto object-cover rounded-lg mb-2"
                     />
@@ -177,7 +195,7 @@ const AllProducts = () => {
                         addToCart(product);
                         toast.success("Added to your cart");
                       }}
-                      className="mt-auto w-full bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-xl text-sm font-medium transition"
+                      className="hover:scale-105 active:scale-95 duration-200 shadow-mdmt-auto w-full bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-xl text-sm font-medium transition"
                     >
                       Add to Cart
                     </button>
