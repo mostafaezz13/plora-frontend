@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { CartContext } from "./context/CartContext";
+import { CartContext } from "./context/cartcontext";
 import { FaTrash, FaPlus, FaMinus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useParams, useNavigate } from "react-router-dom";
