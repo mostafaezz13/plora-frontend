@@ -6,7 +6,7 @@
     "dev": "vite --host --port 8888",
     "build": "vite build",
     "preview": "vite preview",
-    "push": "git add . && git commit -m \"تعديلات\" && git push origin main"
+    "push": "git add . && git commit -m \"Edits\" && git push origin main"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.52.1",
