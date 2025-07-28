@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { supabase } from "../supabaseClient";
+import { Link } from "react-router-dom";
+import DashboardLayout from "../components/DashboardLayout";
 
 const AddProduct = () => {
   const [name, setName] = useState("");
@@ -9,7 +11,7 @@ const AddProduct = () => {
   const [inStock, setInStock] = useState(false);
   const [imageFiles, setImageFiles] = useState([]);
   const [loading, setLoading] = useState(false);
-    const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState({
     stock: "متوفر في المخزون",
   });
 
@@ -72,72 +74,74 @@ const AddProduct = () => {
   };
 
   return (
-    <form
-      onSubmit={handleUpload}
-      className="max-w-md mx-auto mt-10 p-6 bg-white shadow rounded space-y-4"
-    >
-      <h2 className="text-2xl font-bold mb-4">إضافة منتج جديد</h2>
-
-      <input
-        type="text"
-        placeholder="اسم المنتج"
-        className="input w-full p-2 border rounded"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        required
-      />
-
-      <textarea
-        placeholder="الوصف"
-        className="input w-full p-2 border rounded"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        required
-      />
-
-      <input
-        type="number"
-        placeholder="السعر"
-        className="input w-full p-2 border rounded"
-        value={price}
-        onChange={(e) => setPrice(e.target.value)}
-        required
-      />
-
-      <input
-        type="text"
-        placeholder="القسم (category)"
-        className="input w-full p-2 border rounded"
-        value={category}
-        onChange={(e) => setCategory(e.target.value)}
-        required
-      />
-      <label className="block text-sm font-medium text-gray-700 mb-1">
-        حالة المخزون
-      </label>
-      <select
-        value={formData.stock}
-        onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
-        className="w-full p-2 border border-gray-300 rounded-md"
+    <DashboardLayout>
+      <form
+        onSubmit={handleUpload}
+        className="max-w-md mx-auto mt-10 p-6 bg-white shadow rounded space-y-4"
       >
-        <option value="متوفر في المخزون">متوفر في المخزون</option>
-        <option value="غير متوفر في المخزون">غير متوفر في المخزون</option>
-      </select>
+        <h2 className="text-2xl font-bold mb-4">إضافة منتج جديد</h2>
 
-      <input
-        type="file"
-        multiple
-        onChange={(e) => setImageFiles([...e.target.files])}
-        required
-      />
+        <input
+          type="text"
+          placeholder="اسم المنتج"
+          className="input w-full p-2 border rounded"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
 
-      <button
-        disabled={loading}
-        className="bg-pink-600 text-white px-4 py-2 rounded hover:bg-pink-700 w-full"
-      >
-        {loading ? "جارٍ الرفع..." : "رفع المنتج"}
-      </button>
-    </form>
+        <textarea
+          placeholder="الوصف"
+          className="input w-full p-2 border rounded"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          required
+        />
+
+        <input
+          type="number"
+          placeholder="السعر"
+          className="input w-full p-2 border rounded"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          required
+        />
+
+        <input
+          type="text"
+          placeholder="القسم (Rings - Bracelets - Earrings - Necklaces))"
+          className="input w-full p-2 border rounded"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          required
+        />
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          حالة المخزون
+        </label>
+        <select
+          value={formData.stock}
+          onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
+          className="w-full p-2 border border-gray-300 rounded-md"
+        >
+          <option value="متوفر في المخزون">متوفر في المخزون</option>
+          <option value="غير متوفر في المخزون">غير متوفر في المخزون</option>
+        </select>
+
+        <input
+          type="file"
+          multiple
+          onChange={(e) => setImageFiles([...e.target.files])}
+          required
+        />
+
+        <button
+          disabled={loading}
+          className="bg-pink-600 text-white px-4 py-2 rounded hover:bg-pink-700 w-full"
+        >
+          {loading ? "جارٍ الرفع..." : "رفع المنتج"}
+        </button>
+      </form>
+    </DashboardLayout>
   );
 };
 

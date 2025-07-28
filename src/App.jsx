@@ -9,7 +9,9 @@ import Contact from "./pages/Contact";
 import Cart from "./Cart";
 import ProductDetails from "./pages/ProductDetails";
 import AddProduct from "./dashboard/AddProduct";
-import ProductList from './ProductList';
+import ProductList from "./ProductList";
+import AllProductsD from "./dashboard/AllProductsD";
+import EditProduct from "./dashboard/EditProduct";
 
 import { supabase } from "./supabaseClient";
 function App() {
@@ -33,8 +35,10 @@ function App() {
           path="/product/:id"
           element={<ProductDetails addToCart={addToCart} />}
         />
-        <Route path="/add-product" element={<AddProduct />} />
+        <Route path="/add" element={<AddProduct />} />
         <Route path="/product-list" element={<ProductList />} />
+        <Route path="/productsD" element={<AllProductsD />} />
+        <Route path="/edit/:id" element={<EditProduct />} />
       </Routes>
     </>
   );

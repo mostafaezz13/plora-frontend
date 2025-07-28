@@ -19,7 +19,8 @@ const Home = () => {
 
         <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
           Elegant stainless steel pieces crafted with passion. Explore our
-          collection of necklaces, rings, bracelets & more — made to last and shine.
+          collection of necklaces, rings, bracelets & more — made to last and
+          shine.
         </p>
 
         <Link to="/products">

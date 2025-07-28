@@ -7,7 +7,8 @@ body {
 }
 
 @keyframes pulse-alert {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -24,12 +25,11 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
-html, body {
+html,
+body {
   height: 100%;
   overflow-x: hidden;
 }
-
-
 
 .custom-cursor {
   position: fixed;
@@ -42,7 +42,10 @@ html, body {
   transform: translate(-50%, -50%);
   mix-blend-mode: difference;
   will-change: transform;
-  transition: width 0.2s, height 0.2s, background-color 0.2s;
+  transition:
+    width 0.2s,
+    height 0.2s,
+    background-color 0.2s;
 }
 
 .custom-cursor.scale {
@@ -63,4 +66,7 @@ html, body {
   .custom-cursor {
     display: none !important;
   }
+}
+.nav-link {
+  @apply text-gray-800 dark:text-white hover:text-pink-400 font-medium transition-colors duration-300;
 }

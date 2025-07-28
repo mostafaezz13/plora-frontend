@@ -178,7 +178,7 @@ const AllProducts = () => {
                           : product.image_url || "/default.jpg"
                       }
                       alt={product.name}
-                      className="w-full h-auto object-cover rounded-lg mb-2"
+                      className="w-[450px] h-[350px] object-cover rounded-lg mb-2"
                     />
                     <h3 className="text-lg font-semibold text-gray-800 mb-1 dark:text-gray-100 group-hover:text-pink-600 transition">
                       {product.name}

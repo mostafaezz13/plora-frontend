@@ -32,10 +32,7 @@ const Navbar = () => {
           PLORA
         </Link>
 
-        {/* زرار الداكن والهمبرجر معاً */}
         <div className="flex gap-4 items-center">
-          {/* زرار الدارك مود */}
-
           <button
             onClick={() => setDarkMode(!darkMode)}
             className="text-xl text-gray-800 dark:text-white mr-4 md:hidden transition-colors duration-300"
@@ -44,7 +41,6 @@ const Navbar = () => {
             {darkMode ? <FaSun /> : <FaMoon />}
           </button>
 
-          {/* زر الهامبرجر */}
           <button
             onClick={toggleMenu}
             aria-label="Toggle menu"
@@ -88,36 +84,21 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* روابط الديسكتوب */}
+        {/* Desktop Links */}
         <div className="hidden md:flex space-x-6 items-center">
-          <Link
-            to="/"
-            className="text-gray-700 dark:text-gray-200 hover:text-pink-500 dark:hover:text-pink-400 font-medium transition-colors duration-300"
-          >
+          <Link to="/" className="nav-link text-white">
             Home
           </Link>
-          <Link
-            to="/products"
-            className="text-gray-700 dark:text-gray-200 hover:text-pink-500 dark:hover:text-pink-400 font-medium transition-colors duration-300"
-          >
+          <Link to="/products" className="nav-link">
             Products
           </Link>
-          <Link
-            to="/about"
-            className="text-gray-700 dark:text-gray-200 hover:text-pink-500 dark:hover:text-pink-400 font-medium transition-colors duration-300"
-          >
+          <Link to="/about" className="nav-link">
             About
           </Link>
-          <Link
-            to="/contact"
-            className="text-gray-700 dark:text-gray-200 hover:text-pink-500 dark:hover:text-pink-400 font-medium transition-colors duration-300"
-          >
+          <Link to="/contact" className="nav-link">
             Contact
           </Link>
-          <Link
-            to="/cart"
-            className="text-gray-700 dark:text-gray-200 hover:text-pink-500 dark:hover:text-pink-400 font-medium transition-colors duration-300"
-          >
+          <Link to="/cart" className="nav-link">
             <FaShoppingCart className="text-2xl" />
           </Link>
           <button
@@ -130,51 +111,33 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* قائمة الموبايل مع أنيميشن فتح وغلق */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="md:hidden flex flex-col items-center bg-white dark:bg-gray-900 space-y-4 py-4 shadow-md"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            className="md:hidden overflow-hidden bg-white dark:bg-gray-900 shadow-md"
           >
-            <Link
-              to="/"
-              onClick={closeMenu}
-              className="text-gray-700 dark:text-gray-200 hover:text-pink-500 dark:hover:text-pink-400 font-medium"
-            >
-              Home
-            </Link>
-            <Link
-              to="/products"
-              onClick={closeMenu}
-              className="text-gray-700 dark:text-gray-200 hover:text-pink-500 dark:hover:text-pink-400 font-medium"
-            >
-              Products
-            </Link>
-            <Link
-              to="/about"
-              onClick={closeMenu}
-              className="text-gray-700 dark:text-gray-200 hover:text-pink-500 dark:hover:text-pink-400 font-medium"
-            >
-              About
-            </Link>
-            <Link
-              to="/contact"
-              onClick={closeMenu}
-              className="text-gray-700 dark:text-gray-200 hover:text-pink-500 dark:hover:text-pink-400 font-medium"
-            >
-              Contact
-            </Link>
-            <Link
-              to="/cart"
-              onClick={closeMenu}
-              className="text-gray-700 dark:text-gray-200 hover:text-pink-500 dark:hover:text-pink-400 font-medium"
-            >
-              Cart
-            </Link>
+            <div className="flex flex-col items-center space-y-4 py-4">
+              <Link to="/" onClick={closeMenu} className="nav-link">
+                Home
+              </Link>
+              <Link to="/products" onClick={closeMenu} className="nav-link">
+                Products
+              </Link>
+              <Link to="/about" onClick={closeMenu} className="nav-link">
+                About
+              </Link>
+              <Link to="/contact" onClick={closeMenu} className="nav-link">
+                Contact
+              </Link>
+              <Link to="/cart" onClick={closeMenu} className="nav-link">
+                Cart
+              </Link>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
