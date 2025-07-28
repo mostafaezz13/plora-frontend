@@ -67,7 +67,7 @@ const Cart = () => {
                 >
                   <div className="flex items-center gap-4">
                     <img
-                      src={Array.isArray(item.image) ? item.image[0] : item.image_url}
+                      src={Array.isArray(item.image_url) ? item.image_url[0] : item.image_url}
                       alt={item.name}
                       className="w-20 h-20 rounded-lg object-cover shadow-md"
                     />

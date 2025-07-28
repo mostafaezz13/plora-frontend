@@ -107,14 +107,22 @@ const AddProduct = () => {
           required
         />
 
-        <input
-          type="text"
-          placeholder="القسم (Rings - Bracelets - Earrings - Necklaces))"
-          className="input w-full p-2 border rounded"
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          القسم
+        </label>
+        <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded-md"
           required
-        />
+        >
+          <option value="">اختر القسم</option>
+          <option value="Rings">Rings</option>
+          <option value="Bracelets">Bracelets</option>
+          <option value="Earrings">Earrings</option>
+          <option value="Necklaces">Necklaces</option>
+        </select>
+
         <label className="block text-sm font-medium text-gray-700 mb-1">
           حالة المخزون
         </label>
