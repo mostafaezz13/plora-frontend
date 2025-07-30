@@ -2,9 +2,20 @@ import React, { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
 import { Link } from "react-router-dom";
 import DashboardLayout from "../components/DashboardLayout";
+import { useNavigate } from "react-router-dom";
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("الكل");
+  const uniqueCategories = [
+    "الكل",
+    ...new Set(products.map((product) => product.category)),
+  ];
+
+  const filteredProducts =
+    selectedCategory === "الكل"
+      ? products
+      : products.filter((product) => product.category === selectedCategory);
 
   const fetchProducts = async () => {
     const { data, error } = await supabase.from("products").select("*");
@@ -31,11 +42,44 @@ const AllProducts = () => {
     fetchProducts();
   }, []);
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (isLoggedIn !== "true") {
+      navigate("/login");
+    }
+  }, []);
   return (
     <DashboardLayout>
       <div className="p-6 max-w-5xl mx-auto">
+        <button
+          onClick={() => {
+            localStorage.removeItem("isLoggedIn");
+            navigate("/login");
+          }}
+          className="text-sm text-red-600 hover:underline"
+        >
+          تسجيل الخروج
+        </button>
+
         <h2 className="text-2xl font-bold mb-4">كل المنتجات</h2>
         <div className="overflow-x-auto">
+          <div className="mb-4">
+            <label className="text-sm font-medium mr-2">فلتر حسب القسم:</label>
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="border border-gray-300 px-3 py-1 rounded"
+            >
+              {uniqueCategories.map((category, index) => (
+                <option key={index} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+          </div>
+
           <table className="w-full text-right border">
             <thead className="bg-gray-200">
               <tr>
@@ -48,7 +92,7 @@ const AllProducts = () => {
               </tr>
             </thead>
             <tbody>
-              {products.map((product) => (
+              {filteredProducts.map((product) => (
                 <tr key={product.id} className="border-t">
                   <td className="p-2">
                     <img

@@ -85,7 +85,7 @@ const ProductDetails = () => {
   if (!product) {
     return (
       <div className="p-6 text-center text-red-500 dark:text-red-400">
-        المنتج غير موجود 😢
+        المنتج غير موجود  
       </div>
     );
   }
@@ -231,65 +231,73 @@ const ProductDetails = () => {
 
         {/* مودال دليل المقاسات */}
         {isModalOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-2 sm:px-4">
+          <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -50 }}
-              transition={{ duration: 0.25, ease: "easeIn" }}
-              className="bg-white dark:bg-gray-900 p-4 sm:p-8 rounded-2xl w-full max-w-xs sm:max-w-sm md:max-w-xs lg:max-w-xs relative shadow-2xl border border-gray-200 dark:border-gray-700"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.3 }}
+              className="bg-white dark:bg-gray-900 rounded-xl shadow-xl w-full max-w-md sm:max-w-lg max-h-[90vh] overflow-y-auto relative"
             >
+              {/* Close Button */}
               <button
                 onClick={() => {
                   setIsModalOpen(false);
                   setSelectedGuide(null);
                 }}
-                className="absolute top-2 sm:top-3 right-2 sm:right-3 w-9 sm:w-10 h-9 sm:h-10 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 hover:text-pink-600 hover:bg-gray-200 dark:hover:bg-gray-600 shadow-md"
+                className="absolute top-3 right-3 w-9 h-9 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 hover:text-red-500 hover:bg-gray-200 dark:hover:bg-gray-600 shadow"
               >
                 ✕
               </button>
 
-              <h3 className="text-xl sm:text-2xl font-extrabold mb-4 text-center text-gray-800 dark:text-white">
-                دليل المقاسات
-              </h3>
+              {/* Title */}
+              <div className="text-center p-6 pb-3">
+                <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
+                  دليل المقاسات
+                </h2>
+              </div>
 
-              <div className="flex justify-center gap-2 mb-4">
+              {/* Buttons */}
+              <div className="flex justify-center gap-3 pb-4 px-6">
                 <button
                   onClick={() => setSelectedGuide("necklace")}
-                  className={`px-4 py-2 rounded-full font-semibold shadow border-2 ${
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all border-2 ${
                     selectedGuide === "necklace"
                       ? "bg-pink-500 text-white border-pink-500"
-                      : "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white border-gray-300"
+                      : "bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-white border-gray-300"
                   }`}
                 >
                   سلاسل
                 </button>
                 <button
                   onClick={() => setSelectedGuide("ring")}
-                  className={`px-4 py-2 rounded-full font-semibold shadow border-2 ${
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all border-2 ${
                     selectedGuide === "ring"
                       ? "bg-pink-500 text-white border-pink-500"
-                      : "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white border-gray-300"
+                      : "bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-white border-gray-300"
                   }`}
                 >
                   خواتم
                 </button>
               </div>
 
-              {selectedGuide === "necklace" && (
-                <img
-                  src="/necklace-size.jpg"
-                  alt="دليل مقاسات السلاسل"
-                  className="w-full rounded-xl shadow nec"
-                />
-              )}
-              {selectedGuide === "ring" && (
-                <img
-                  src="/Measure.png"
-                  alt="دليل مقاسات الخواتم"
-                  className="w-full rounded-xl shadow"
-                />
-              )}
+              {/* Scrollable content with image */}
+              <div className="p-4">
+                {selectedGuide === "necklace" && (
+                  <img
+                    src="/necklace-size.jpg"
+                    alt="مقاس السلاسل"
+                    className="w-full h-auto rounded-lg object-contain"
+                  />
+                )}
+                {selectedGuide === "ring" && (
+                  <img
+                    src="/ringsize.jpg"
+                    alt="مقاس الخواتم"
+                    className="w-full h-auto rounded-lg object-contain"
+                  />
+                )}
+              </div>
             </motion.div>
           </div>
         )}

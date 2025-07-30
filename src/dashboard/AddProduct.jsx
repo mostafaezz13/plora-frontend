@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import { supabase } from "../supabaseClient";
 import { Link } from "react-router-dom";
 import DashboardLayout from "../components/DashboardLayout";
+import { useNavigate } from "react-router-dom";
 
 const AddProduct = () => {
   const [name, setName] = useState("");
@@ -14,6 +15,7 @@ const AddProduct = () => {
   const [formData, setFormData] = useState({
     stock: "متوفر في المخزون",
   });
+  const navigated = useNavigate();
 
   const handleUpload = async (e) => {
     e.preventDefault();
@@ -73,8 +75,27 @@ const AddProduct = () => {
     setLoading(false);
   };
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (isLoggedIn !== "true") {
+      navigated("/login");
+    }
+  }, []);
+
   return (
     <DashboardLayout>
+      <button
+        onClick={() => {
+          localStorage.removeItem("isLoggedIn");
+          navigate("/login");
+        }}
+        className="text-xs text-white bg-red-600 p-2 rounded-2xl"
+      >
+        تسجيل الخروج
+      </button>
+
       <form
         onSubmit={handleUpload}
         className="max-w-md mx-auto mt-10 p-6 bg-white shadow rounded space-y-4"

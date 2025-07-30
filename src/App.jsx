@@ -12,6 +12,7 @@ import AddProduct from "./dashboard/AddProduct";
 import ProductList from "./ProductList";
 import AllProductsD from "./dashboard/AllProductsD";
 import EditProduct from "./dashboard/EditProduct";
+import Login from "./dashboard/Login";
 
 import { supabase } from "./supabaseClient";
 function App() {
@@ -39,6 +40,7 @@ function App() {
         <Route path="/product-list" element={<ProductList />} />
         <Route path="/productsD" element={<AllProductsD />} />
         <Route path="/edit/:id" element={<EditProduct />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </>
   );

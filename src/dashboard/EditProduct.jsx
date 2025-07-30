@@ -81,6 +81,14 @@ const EditProduct = () => {
   if (!product)
     return <div className="p-4 text-center">جاري تحميل بيانات المنتج...</div>;
 
+  const navigated = useNavigate();
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (isLoggedIn !== "true") {
+      navigated("/login");
+    }
+  }, []);
   return (
     <form
       onSubmit={handleUpdate}

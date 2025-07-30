@@ -23,7 +23,7 @@ const About = () => {
 
   return (
     <section
-      className="md:h-screen transition-colors duration-500 bg-gradient-to-b from-white to-pink-50 dark:from-gray-900 dark:to-gray-950 py-10 px-6 sm:px-12"
+      className="md:h-[89.6vh] transition-colors duration-500 bg-gradient-to-b from-white to-pink-50 dark:from-gray-900 dark:to-gray-950 py-10 px-6 sm:px-12"
       id="about"
     >
       <div className="max-w-6xl mx-auto text-center">

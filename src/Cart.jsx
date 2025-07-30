@@ -4,11 +4,13 @@ import { FaTrash, FaPlus, FaMinus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "./supabaseClient";
+import { AnimatePresence, motion } from "framer-motion";
 
 const Cart = () => {
   const { cartItems, addToCart, removeFromCart } = useContext(CartContext);
   const [customerName, setCustomerName] = useState("");
   const navigate = useNavigate();
+  const [showInstructions, setShowInstructions] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
@@ -67,7 +69,11 @@ const Cart = () => {
                 >
                   <div className="flex items-center gap-4">
                     <img
-                      src={Array.isArray(item.image_url) ? item.image_url[0] : item.image_url}
+                      src={
+                        Array.isArray(item.image_url)
+                          ? item.image_url[0]
+                          : item.image_url
+                      }
                       alt={item.name}
                       className="w-20 h-20 rounded-lg object-cover shadow-md"
                     />
@@ -134,14 +140,12 @@ const Cart = () => {
                 </span>
               </p>
 
-              <a
-                href={generateWhatsAppLink()}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={() => setShowInstructions(true)}
                 className="bg-green-500 hover:bg-green-600 text-white text-center py-3 px-6 rounded-lg text-lg font-medium shadow transition-all duration-300"
               >
                 ✅ Complete Order on WhatsApp
-              </a>
+              </button>
             </div>
           </>
         )}
@@ -166,6 +170,52 @@ const Cart = () => {
           </span>
         </div>
       </div>
+      <AnimatePresence>
+        {showInstructions && (
+          <motion.div
+            key="modal"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center px-4"
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="bg-white dark:bg-gray-800 p-6 rounded-2xl max-w-md w-full shadow-xl relative"
+            >
+              <button
+                onClick={() => setShowInstructions(false)}
+                className="absolute top-3 right-3 text-gray-500 hover:text-red-500 text-xl"
+              >
+                ✕
+              </button>
+
+              <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-white text-center">
+                خطوات إتمام الطلب
+              </h3>
+
+              <ul className="text-gray-700 dark:text-gray-200 text-sm space-y-3 mb-6">
+                <li>✅ "دوس على زر "متابعة للواتساب.</li>
+                <li>📦 هيفتحلك واتساب وفيه رسالة فيها تفاصيل الطلب.</li>
+                <li>📝 راجع اسمك والحاجات اللي طلبتها.</li>
+                <li>📬 ابعت الرسالة واستنى تأكيد الطلب من خدمة العملاء.</li>
+              </ul>
+
+              <a
+                href={generateWhatsAppLink()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg text-center font-medium"
+              >
+                متابعة للواتساب
+              </a>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

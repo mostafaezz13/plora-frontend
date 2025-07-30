@@ -6,7 +6,7 @@ const Contact = () => {
   return (
     <section
       id="contact"
-      className="h-[100vh] bg-white dark:bg-gray-900 flex items-center justify-center px-6 py-16 transition-colors duration-500"
+      className="h-[89.6vh] bg-white dark:bg-gray-900 flex items-center justify-center px-6 py-16 transition-colors duration-500"
     >
       <motion.div
         className="bg-gradient-to-br from-pink-100 to-white dark:from-gray-800 dark:to-gray-900 rounded-3xl shadow-2xl overflow-hidden w-full max-w-6xl flex flex-col md:flex-row  transition-colors duration-500"
