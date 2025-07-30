@@ -87,7 +87,7 @@ const AllProducts = () => {
             >
               <FaShoppingCart className="text-2xl" />
             </Link>
-            <h2 className="text-pink-600 dark:text-pink-400 font-bold text-lg">
+            <h2 className="text-gray-700 dark:text-gray-200 font-bold text-lg">
               Categories
             </h2>
             <button
@@ -167,10 +167,10 @@ const AllProducts = () => {
               No products found in this category.
             </p>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
               {filteredProducts.map((product) => (
                 <Link to={`/product/${product.id}`} key={product.id}>
-                  <div className="bg-white dark:bg-gray-800 shadow-md dark:shadow-lg rounded-xl overflow-hidden p-4 flex flex-col transition-transform hover:scale-[1.02] duration-300 group">
+                  <div className="bg-gray-50 dark:bg-gray-900 overflow-hidden flex flex-col hover:scale-[1.02] group h-full transition-colors duration-500">
                     <img
                       src={
                         Array.isArray(product.image_url)
@@ -178,15 +178,15 @@ const AllProducts = () => {
                           : product.image_url || "/default.jpg"
                       }
                       alt={product.name}
-                      className="w-[450px] h-[350px] object-cover rounded-lg mb-2"
+                      className="w-full h-48 sm:h-56 md:h-auto object-cover mb-2"
                     />
-                    <h3 className="text-lg font-semibold text-gray-800 mb-1 dark:text-gray-100 group-hover:text-pink-600 transition">
+                    <h3 className="text-center text-lg font-semibold text-gray-800 mb-1 dark:text-gray-100 group-hover:text-pink-600 transition">
                       {product.name}
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm">
+                    <p className="text-center text-gray-600 dark:text-gray-400 text-sm">
                       {product.description}
                     </p>
-                    <span className="text-pink-600 dark:text-pink-400 font-bold text-md my-3">
+                    <span className="text-center text-pink-600 dark:text-pink-400 font-bold text-md my-3">
                       {product.price} EGP
                     </span>
                     <button
@@ -195,7 +195,7 @@ const AllProducts = () => {
                         addToCart(product);
                         toast.success("Added to your cart");
                       }}
-                      className="hover:scale-105 active:scale-95 duration-200 shadow-mdmt-auto w-full bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-xl text-sm font-medium transition"
+                      className="hover:scale-105 active:scale-95 duration-200 shadow-mdmt-auto w-full bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition"
                     >
                       Add to Cart
                     </button>

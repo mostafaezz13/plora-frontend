@@ -63,10 +63,21 @@ body {
 }
 
 @media (max-width: 768px) {
-  .custom-cursor {
-    display: none !important;
+  .sizes-btn {
+    margin-left: 55%;
+    margin-top: 20px;
+  }
+}
+@media (min-width: 768px) {
+  .sizes-btn {
+    margin-left: 357px;
+    margin-top: 20px;
   }
 }
 .nav-link {
   @apply text-gray-800 dark:text-white hover:text-pink-400 font-medium transition-colors duration-300;
+}
+
+.nec{
+  transform: scale(1.1);
 }

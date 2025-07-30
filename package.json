@@ -6,9 +6,10 @@
     "dev": "vite --host --port 8888",
     "build": "vite build",
     "preview": "vite preview",
-    "push": "git add . && git commit -m \"Edits\" && git push origin main"
+    "push": "git add . && git commit -m \"All Products\" && git push origin main"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.6",
     "@supabase/supabase-js": "^2.52.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.9",
