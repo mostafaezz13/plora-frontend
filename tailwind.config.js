@@ -16,7 +16,7 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/line-clamp")],
 };
 module.exports = {
   darkMode: "class", // أو 'media' لو عايزها حسب إعداد الجهاز، بس الأفضل 'class'
@@ -24,8 +24,9 @@ module.exports = {
   theme: {
     extend: {
       scale: {
-        '102': '1.02',
+        102: "1.02",
       },
+    },
+    plugins: [],
   },
-  plugins: [],
-}};
+};

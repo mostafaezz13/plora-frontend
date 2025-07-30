@@ -183,7 +183,7 @@ const AllProducts = () => {
                     <h3 className="text-center text-lg font-semibold text-gray-800 mb-1 dark:text-gray-100 group-hover:text-pink-600 transition">
                       {product.name}
                     </h3>
-                    <p className="text-center text-gray-600 dark:text-gray-400 text-sm">
+                    <p className="text-center text-gray-600 dark:text-gray-400 text-sm line-clamp-2">
                       {product.description}
                     </p>
                     <span className="text-center text-pink-600 dark:text-pink-400 font-bold text-md my-3">
@@ -195,7 +195,7 @@ const AllProducts = () => {
                         addToCart(product);
                         toast.success("Added to your cart");
                       }}
-                      className="hover:scale-105 active:scale-95 duration-200 shadow-mdmt-auto w-full bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition"
+                      className="mt-auto hover:scale-105 active:scale-95 duration-200 shadow-mdmt-auto w-full bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition"
                     >
                       Add to Cart
                     </button>
