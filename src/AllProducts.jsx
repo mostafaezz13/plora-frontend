@@ -186,7 +186,7 @@ const AllProducts = () => {
                     <p className="text-center text-gray-600 dark:text-gray-400 text-sm line-clamp-2">
                       {product.description}
                     </p>
-                    <span className="text-center text-pink-600 dark:text-pink-400 font-bold text-md mt-3">
+                    <span className="text-center text-pink-600 dark:text-pink-400 font-bold text-md my-3">
                       {product.price} EGP
                     </span>
                     <button
