@@ -1,33 +1,28 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FaRing, FaGem, FaLink, FaHeart } from "react-icons/fa";
 import { FaArrowDown } from "react-icons/fa6";
 
 const categories = [
   {
     name: "Necklaces",
-    icon: <FaLink />,
-    path: "/products?category=necklaces",
-    img: "WhatsApp Image 2025-08-08 at 4.27.55 PM.jpeg",
+    path: "/products?category=Necklaces",
+    img: "WhatsApp Image 2025-08-09 at 3.22.19 PM.jpeg",
   },
   {
     name: "Rings",
-    icon: <FaRing />,
-    path: "/products?category=rings",
-    img: "WhatsApp Image 2025-07-22 at 2.25.51 AM.jpeg",
+    path: "/products?category=Rings",
+    img: "WhatsApp Image 2025-08-09 at 3.22.12 PM.jpeg",
   },
   {
     name: "Bracelets",
-    icon: <FaHeart />,
-    path: "/products?category=bracelets",
-    img: "WhatsApp Image 2025-08-08 at 4.30.41 PM.jpeg",
+    path: "/products?category=Bracelets",
+    img: "WhatsApp Image 2025-08-09 at 3.22.10 PM.jpeg",
   },
   {
     name: "Earrings",
-    icon: <FaGem />,
-    path: "/products?category=earrings",
-    img: "WhatsApp Image 2025-08-08 at 4.29.38 PM.jpeg",
+    path: "/products?category=Earrings",
+    img: "WhatsApp Image 2025-08-09 at 3.22.08 PM.jpeg",
   },
 ];
 

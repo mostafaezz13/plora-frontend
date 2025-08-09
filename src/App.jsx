@@ -13,8 +13,8 @@ import ProductList from "./ProductList";
 import AllProductsD from "./dashboard/AllProductsD";
 import EditProduct from "./dashboard/EditProduct";
 import Login from "./dashboard/Login";
-
 import { supabase } from "./supabaseClient";
+
 function App() {
   const [cart, setCart] = useState([]);
 

@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { CartContext } from "./context/cartcontext";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "react-hot-toast";
 import { FaShoppingCart } from "react-icons/fa";
@@ -15,7 +15,16 @@ const categories = [
 ];
 
 const AllProducts = () => {
-  const [selectedCategory, setSelectedCategory] = useState("All Products");
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const categoryParam = params.get("category");
+
+  const capitalizeFirstLetter = (str) =>
+    str ? str.charAt(0).toUpperCase() + str.slice(1).toLowerCase() : "";
+
+  const [selectedCategory, setSelectedCategory] = useState(
+    categoryParam ? capitalizeFirstLetter(categoryParam) : "All Products"
+  );
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,23 +36,30 @@ const AllProducts = () => {
       const { data, error } = await supabase.from("products").select("*");
       if (error) {
         console.error("Error fetching products:", error);
+        setProducts([]);
       } else {
-        setProducts(data);
+        setProducts(Array.isArray(data) ? data : []);
       }
       setLoading(false);
     };
-
     fetchProducts();
   }, []);
+
+  useEffect(() => {
+    if (categoryParam) {
+      setSelectedCategory(capitalizeFirstLetter(categoryParam));
+    }
+  }, [categoryParam]);
 
   const filteredProducts =
     selectedCategory === "All Products"
       ? products
-      : products.filter((product) => product.category === selectedCategory);
+      : products.filter(
+          (product) =>
+            product?.category?.toLowerCase() === selectedCategory.toLowerCase()
+        );
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen((prev) => !prev);
-  };
+  const toggleMobileMenu = () => setMobileMenuOpen((prev) => !prev);
 
   return (
     <motion.div
@@ -53,46 +69,51 @@ const AllProducts = () => {
       exit={{ opacity: 0, y: -50 }}
       transition={{ duration: 0.4 }}
     >
-      <div className="flex flex-col md:flex-row min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-500">
-        <aside className="hidden md:block md:w-64 bg-white dark:bg-gray-800 border-r dark:border-gray-700 p-6 transition-colors duration-500 sticky top-0 h-screen overflow-y-auto">
-          <h2 className="text-pink-600 dark:text-pink-400 font-bold mb-4 text-lg text-left">
+      <div className="flex flex-col md:flex-row min-h-screen transition-colors duration-500">
+        {/* Sidebar - Desktop */}
+        <aside className="hidden md:block md:w-64 bg-white dark:bg-gray-800 border-r dark:border-gray-700 p-6 sticky top-0 h-screen overflow-y-auto">
+          <h2 className="text-pink-600 dark:text-pink-400 font-bold mb-4 text-lg">
             Categories
           </h2>
-          <ul className="space-y-2 text-left">
+          <ul className="space-y-2">
             {categories.map((category, index) => (
               <li key={index}>
-                <button
-                  onClick={() => {
-                    setSelectedCategory(category);
-                    window.scrollTo({ top: 0, behavior: "smooth" });
-                  }}
-                  className={`w-full text-left px-4 py-2 rounded transition text-sm font-medium ${
+                <Link
+                  to={
+                    category === "All Products"
+                      ? "/products"
+                      : `/products?category=${category.toLowerCase()}`
+                  }
+                  onClick={() =>
+                    window.scrollTo({ top: 0, behavior: "smooth" })
+                  }
+                  className={`block px-4 py-2 rounded text-sm font-medium transition ${
                     selectedCategory === category
                       ? "bg-pink-600 text-white"
                       : "text-gray-700 dark:text-gray-300 hover:bg-pink-100 dark:hover:bg-pink-900"
                   }`}
                 >
                   {category}
-                </button>
+                </Link>
               </li>
             ))}
           </ul>
         </aside>
 
+        {/* Mobile Menu */}
         <div className="block md:hidden w-full">
           <div className="flex items-center justify-between bg-white dark:bg-gray-800 border-b dark:border-gray-700 px-4 py-3">
             <Link
               to="/cart"
-              className="text-gray-700 dark:text-gray-200 hover:text-pink-500 dark:hover:text-pink-400 font-medium"
+              className="text-gray-700 dark:text-gray-200 hover:text-pink-500 dark:hover:text-pink-400"
             >
               <FaShoppingCart className="text-2xl" />
             </Link>
-            <h2 className="text-gray-700 dark:text-gray-200 font-bold text-lg">
+            <h2 className="font-bold text-lg text-gray-700 dark:text-gray-200">
               Categories
             </h2>
             <button
               onClick={toggleMobileMenu}
-              aria-label="Toggle menu"
               className="text-pink-600 dark:text-pink-400 focus:outline-none"
             >
               <motion.svg
@@ -127,25 +148,29 @@ const AllProducts = () => {
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: "auto", opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
+                transition={{ duration: 0.3 }}
                 className="overflow-hidden bg-white dark:bg-gray-800 border-b dark:border-gray-700 px-4"
               >
                 {categories.map((category, index) => (
-                  <li key={index} className="mb-2 last:mb-0">
-                    <button
+                  <li key={index} className="mb-2">
+                    <Link
+                      to={
+                        category === "All Products"
+                          ? "/products"
+                          : `/products?category=${category.toLowerCase()}`
+                      }
                       onClick={() => {
-                        setSelectedCategory(category);
                         setMobileMenuOpen(false);
                         window.scrollTo({ top: 0, behavior: "smooth" });
                       }}
-                      className={`w-full text-left px-4 py-2 rounded-lg text-sm font-medium transition ${
+                      className={`block px-4 py-2 rounded-lg text-sm font-medium transition ${
                         selectedCategory === category
                           ? "bg-pink-600 text-white"
                           : "text-gray-700 dark:text-gray-300 hover:bg-pink-100 dark:hover:bg-pink-900"
                       }`}
                     >
                       {category}
-                    </button>
+                    </Link>
                   </li>
                 ))}
               </motion.ul>
@@ -153,41 +178,44 @@ const AllProducts = () => {
           </AnimatePresence>
         </div>
 
+        {/* Products */}
         <main className="flex-1 p-4 md:p-6">
-          <h1 className="text-2xl font-bold text-pink-600 dark:text-pink-400 mb-6">
+          <h1 className="text-2xl font-bold text-pink-600 dark:text-pink-400 mb-6 text-center">
             {selectedCategory}
           </h1>
 
           {loading ? (
-            <p className="text-gray-500 dark:text-gray-400">
+            <p className="text-center text-gray-500 dark:text-gray-400">
               Loading products...
             </p>
           ) : filteredProducts.length === 0 ? (
-            <p className="text-gray-500 dark:text-gray-400">
+            <p className="text-center text-gray-500 dark:text-gray-400">
               No products found in this category.
             </p>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredProducts.map((product) => (
                 <Link to={`/product/${product.id}`} key={product.id}>
-                  <div className="bg-gray-50 dark:bg-gray-900 overflow-hidden flex flex-col hover:scale-[1.02] group h-full transition-colors duration-500">
+                  <div className="bg-gray-50 dark:bg-gray-900 overflow-hidden flex flex-col hover:scale-[1.02] group h-full transition">
                     <img
                       src={
                         Array.isArray(product.image_url)
-                          ? product.image_url[0]
-                          : product.image_url || "/default.jpg"
+                          ? encodeURI(product.image_url[0])
+                          : product.image_url
+                            ? encodeURI(product.image_url)
+                            : "/default.jpg"
                       }
-                      alt={product.name}
-                      className="w-full h-48 sm:h-56 md:h-auto object-cover mb-2"
+                      alt={product.name || "Product"}
+                      className="w-full h-48 sm:h-56 object-cover mb-2"
                     />
-                    <h3 className="text-center text-lg font-semibold text-gray-800 mb-1 dark:text-gray-100 group-hover:text-pink-600 transition">
-                      {product.name}
+                    <h3 className="text-center text-lg font-semibold text-gray-800 dark:text-gray-100 group-hover:text-pink-600 transition">
+                      {product.name || "Unnamed Product"}
                     </h3>
                     <p className="text-center text-gray-600 dark:text-gray-400 text-sm line-clamp-2">
-                      {product.description}
+                      {product.description || "No description available."}
                     </p>
                     <span className="text-center text-pink-600 dark:text-pink-400 font-bold text-md my-3">
-                      {product.price} EGP
+                      {product.price ? `${product.price} EGP` : "Price not set"}
                     </span>
                     <button
                       onClick={(e) => {
@@ -195,7 +223,7 @@ const AllProducts = () => {
                         addToCart(product);
                         toast.success("Added to your cart");
                       }}
-                      className="mt-auto hover:scale-105 active:scale-95 duration-200 shadow-mdmt-auto w-full bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition"
+                      className="mt-auto w-full bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition"
                     >
                       Add to Cart
                     </button>
